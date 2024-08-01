@@ -1,82 +1,42 @@
 ---
-title: "Astro Nano"
-description: "Minimal portfolio and blog build with astro and no frameworks."
-date: "2024-03-26"
-demoURL: "https://astro-nano-demo.vercel.app"
-repoURL: "https://github.com/markhorn-dev/astro-nano"
+title: "🛍️ my-shop"
+description: ""
+date: "08/01/2024"
 ---
 
-![Astro Nano](/astro-nano.png)
+## 🛍️ my-shop
 
-Astro Nano is a static, minimalist, lightweight, lightning fast portfolio and blog theme.
+사용자가 쉽게 상품을 검색하고 관리할 수 있는 간단한 쇼핑 애플리케이션입니다.
 
-Built with Astro, Tailwind and Typescript, and no frameworks.
+## 🛒 배포 링크
 
-It was designed as an even more minimal theme than Mark Horn's popular theme [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
+http://43.203.253.0:8080/
 
-## 🚀 Deploy your own
+## 🛒 테스트 계정
 
-<div class="flex gap-2">
-  <a target="_blank" aria-label="Deploy with Vercel" href="https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-nano">
-    <img src="/deploy_vercel.svg" />
-  </a>
-  <a target="_blank" aria-label="Deploy with Netlify" href="https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-nano">
-    <img src="/deploy_netlify.svg" />
-  </a>
-</div>
+- 아이디: test1
+- 비밀번호: 0000
 
-## 📋 Features
+## 🛒 주요 기능
 
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
+### 🛍️ 1. 상품 검색
 
-## 💯 Lighthouse score
+- 네이버 쇼핑 API와 연동하여 다양한 상품을 검색할 수 있습니다.
+- 키워드 기반 검색 지원
 
-![Astro Nano Lighthouse Score](/astro-nano-lighthouse.jpg)
+### 🛍️ 2. 최저가 설정
 
-## 🕊️ Lightweight
+- 사용자가 원하는 상품의 최저가를 설정할 수 있습니다.
+- 최저가 알림 기능 제공
 
-No frameworks or added bulk
+### 🛍️ 3. 폴더에 담기
 
-## ⚡︎ Fast
+- 관심 상품을 개인 폴더에 저장할 수 있습니다.
+- 폴더 생성 기능 제공
 
-Rendered in ~40ms on localhost
+## 🛒 기술 스택
 
-## 📄 Configuration
-
-The blog posts on the demo serve as the documentation and configuration.
-
-## 💻 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
-
-| Command                   | Action                                            |
-| :------------------------ | :------------------------------------------------ |
-| `npm install`             | Installs dependencies                             |
-| `npm run dev`             | Starts local dev server at `localhost:4321`       |
-| `npm run dev:network`     | Starts local dev server on local network          |
-| `npm run sync`            | Generates TypeScript types for all Astro modules. |
-| `npm run build`           | Build your production site to `./dist/`           |
-| `npm run preview`         | Preview your build locally, before deploying      |
-| `npm run preview:network` | Preview build on local network                    |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`  |
-| `npm run astro -- --help` | Get help using the Astro CLI                      |
-| `npm run lint`            | Run ESLint                                        |
-| `npm run lint:fix`        | Auto-fix ESLint issues                            |
-
-## 🏛️ License
-
-MIT
+- Spring Boot
+- Thymeleaf
+- AWS
+- RDBMS (MySQL)

@@ -1,0 +1,192 @@
+---
+title: "🛠️ 프로젝트 초기 설정"
+description: ""
+date: "2024-08-01"
+---
+
+import Callout from "@/components/Callout.astro";
+
+---
+
+## ⚒️ 기술 스택
+
+```
+Backend: Spring Boot
+API: RESTful
+Database: MySQL
+Version Control: Git
+Containerization: Docker
+```
+
+## 🔧 Java 프로젝트 생성
+
+![](https://velog.velcdn.com/images/leemiyeonn/post/bbfabae7-e9a1-4f35-944e-5950b1665979/image.png)
+
+## 🌐 GitHub Repository 연결
+
+```
+git init: 현재 디렉토리를 Git 저장소로 초기화합니다.
+
+git remote add origin [URL]: 원격 저장소를 추가하고 이름을 origin으로 설정합니다. 여기서 [URL]은 GitHub에서 제공하는 저장소의 주소입니다.
+
+git branch -m master main: 로컬 저장소의 기본 브랜치 이름을 master에서 main으로 변경합니다.
+
+git add .: 현재 디렉토리의 모든 파일을 스테이징 영역에 추가합니다.
+
+git commit -m "[commit message]": 스테이징 영역에 있는 파일들을 커밋합니다.
+
+git push -u origin main: 변경 사항을 원격 저장소의 main 브랜치에 푸시합니다. -u 옵션은 원격 저장소 origin의 main 브랜치를 로컬 브랜치에 업스트림으로 설정합니다. 이후에는 git push만으로 푸시할 수 있습니다.
+
+git branch dev: dev라는 이름의 새로운 브랜치를 생성합니다.
+
+git checkout dev: 생성한 dev 브랜치로 작업 디렉토리를 전환합니다.
+
+git pull origin [branch]: 원격 저장소에서 특정 브랜치의 최신 변경사항을 가져오는 명령어입니다.
+
+```
+
+## 🔢 멀티 모듈 설정
+
+![](https://velog.velcdn.com/images/leemiyeonn/post/1c4e6e70-c2bd-482f-bd7b-667efbd8dd3a/image.png)
+
+### 🗂️ 프로젝트 디렉토리 구조
+
+```
+service/
+├── api/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   └── resources/
+│   │   │   │   ├── application.yaml
+│   ├── build.gradle
+├── db/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   └── resources/
+│   ├── build.gradle
+├── build.gradle
+├── settings.gradle
+
+```
+
+![](https://velog.velcdn.com/images/leemiyeonn/post/0d1f0d33-e699-4746-b5cf-0a2d6cb99bb7/image.png)
+
+### 🐘 build.gradle
+
+#### 🖥️ root module
+
+부모 프로젝트는 공통 설정 및 종속성을 관리하는 역할을 하며, 실제로 실행 가능한 JAR 파일을 생성할 필요가 없습니다. 부모 프로젝트 자체가 애플리케이션으로서 배포되지 않기 때문입니다.
+
+![](https://velog.velcdn.com/images/leemiyeonn/post/d8ddcbfc-7a1d-4b18-8bcc-c0b74e00f7ed/image.png)
+
+#### 🖥️ api module
+
+api 모듈은 spring boot application으로 실행되므로 bootJar를 활성화합니다.
+db 모듈을 의존성으로 추가하며, Spring Boot 관련 종속성도 함께 추가합니다.
+application.yaml 파일을 통해 필요한 설정을 구성합니다.
+
+```
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+group = 'org.delivery'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+	// db 모듈 의존성 추가
+    implementation project(':db')
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // swagger
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.7.0'
+
+    // jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false
+}
+```
+
+#### 🖥️ db module
+
+db 모듈은 라이브러리 모듈로 사용되며, 스프링 부트 애플리케이션으로 실행되지 않아 bootJar를 비활성화하고, 일반 JAR 파일 생성을 활성화합니다.
+일반 JAR 파일은 다른 모듈이나 애플리케이션에서 사용할 수 있는 라이브러리 형태로 제공됩니다.
+
+```
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+group = 'org.delivery'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+```
